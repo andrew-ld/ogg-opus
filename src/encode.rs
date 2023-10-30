@@ -95,7 +95,7 @@ pub fn encode<const S_PS: u32, const NUM_CHANNELS: u8>(audio: &[i16]) -> Result<
     // opus_encoder.set_bitrate(Bitrate::BitsPerSecond(24000))?;
     opus_encoder.set_application(Application::Audio)?;
     opus_encoder.set_max_bandwidth(Bandwidth::Fullband)?;
-    opus_encoder.set_signal(Signal::Voice);
+    opus_encoder.set_signal(Signal::Voice)?;
 
     let skip = opus_encoder.lookahead().unwrap() as u16;
     let skip_us = skip as usize;
