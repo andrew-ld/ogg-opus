@@ -6,7 +6,7 @@ use crate::common::*;
 
 use byteorder::{LittleEndian, ByteOrder};
 use ogg::PacketWriter;
-use audiopus::{Application, Fullband, Signal, coder::{Encoder as OpusEnc, GenericCtl}};
+use audiopus::{Application, Fullband, Signal, Bandwidth, coder::{Encoder as OpusEnc, GenericCtl}};
 use rand::Rng;
 
 //--- Final range  things ------------------------------------------------------
