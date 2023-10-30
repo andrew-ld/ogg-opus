@@ -6,7 +6,7 @@ use crate::common::*;
 
 use byteorder::{LittleEndian, ByteOrder};
 use ogg::PacketWriter;
-use audiopus::{Bitrate, coder::{Encoder as OpusEnc, GenericCtl}};
+use audiopus::{Application, Fullband, Signal, coder::{Encoder as OpusEnc, GenericCtl}};
 use rand::Rng;
 
 //--- Final range  things ------------------------------------------------------
@@ -92,7 +92,10 @@ pub fn encode<const S_PS: u32, const NUM_CHANNELS: u8>(audio: &[i16]) -> Result<
     let opus_sr = s_ps_to_audiopus(S_PS)?;
 
     let mut opus_encoder = OpusEnc::new(opus_sr, opus_channels(NUM_CHANNELS), audiopus::Application::Audio)?;
-    opus_encoder.set_bitrate(Bitrate::BitsPerSecond(24000))?;
+    // opus_encoder.set_bitrate(Bitrate::BitsPerSecond(24000))?;
+    opus_encoder.set_application(Application::Audio)?;
+    opus_encoder.set_max_bandwidth(Bandwidth::Fullband)?;
+    opus_encoder.set_signal(Signal::Voice);
 
     let skip = opus_encoder.lookahead().unwrap() as u16;
     let skip_us = skip as usize;
